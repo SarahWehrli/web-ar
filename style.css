@@ -1,0 +1,356 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: black;
+    -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape */
+}
+
+/* iPhone 16 Pro Max Viewport Fix */
+@supports (-webkit-touch-callout: none) {
+    body {
+        padding-bottom: env(safe-area-inset-bottom); /* Avoids notch/home indicator */
+    }
+}
+
+/* Home Page */
+.home-page {
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    margin-top: 5vh;
+}
+
+.logo img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+h1 {
+    margin-top: 2vh;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.tagline {
+    margin: 10px 5vw;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Buttons */
+.button {
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 12px 24px;
+    font-size:18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px auto;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-button {
+    background-color: #ff8ad8;
+}
+
+.warenkorb-button {
+    background-color: #FFC000;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 15px 5vw;
+    display: inline-block; 
+    width: auto;
+    margin-left: 20px;
+    display: inline-block;
+}
+/* Product List Styles */
+.product-list {
+    margin: 10vh 5vw 15vh; 
+    padding: 0;
+}
+
+.product {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.details-button {
+    background: none;
+    border: 2px solid #333;
+    background-color:#D77AE5;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.product img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin: 10px 0 15px;
+}
+
+.product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#D77AE5;
+    border: 2px solid #333;
+    padding: 8px 16px;
+    border-radius: 12px;
+}
+
+.product-name {
+    font-weight: bold;
+    font-size: 22px;
+    color: #333;
+    margin: 0;
+}
+
+.price-shop {
+    background: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    border: 2px solid #333;
+    background-color:#D9D9D9;
+    border-radius: 12px;
+    padding: 8px 16px;
+    color: #333;
+}
+
+/* Product Detail Page */
+.product-detail {
+    padding: 0 5vw;
+    margin-top: 8vh;
+    margin-bottom: 12vh;
+}
+
+.product-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.product-brand {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.product-image {
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    margin: 20px 0;
+}
+
+.product-card {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 20px;
+    width: 90vw;
+    max-width: 420px;
+    margin: 8vh auto 4vh;
+    padding: 15px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 35vh;
+    max-height: 300px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+.product-card h1 {
+    margin: 5px 0;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.product-card h2 {
+    margin: 0 0 15px 0;
+    font-size: 1em;
+    color: grey;
+    font-weight: normal;
+}
+.camera-icon {
+    background-color: #FFFF00;
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.camera-icon img {
+    width: 25px;
+    height: 25px;
+}
+
+.product-info {
+    margin-top: 15px;
+    font-size: 1em;
+}
+
+.product-info p {
+    margin: 8px 0;
+}
+
+.product-info b {
+    display: inline-block;
+    width: 70px;
+}
+.add-to-cart {
+    background-color: #ffc107;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 8px 15px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 20px;
+    text-decoration: none;
+    color: black;
+    font-size: 0.9em;
+}
+
+.add-to-cart img {
+    margin-left: 8px;
+    width: 18px;
+    height: 18px;
+}
+
+
+.divider {
+    border: none;
+    height: 1px;
+    background-color: #ddd;
+    margin: 25px 0;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 11vh;
+    max-height: 28px;
+    padding: 8px;
+    background-color: white;
+    border-top: 1px solid #ddd;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.bottom-nav img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.center-icon img {
+    width: 36px;
+    height: 36px;
+}
+
+.bottom-line {
+    width: 120px;
+    height: 5px;
+    background-color: black;
+    border-radius: 5px;
+    position: fixed;
+    bottom: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #FF7E79;
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 10px;
+    width: 120px;
+    height: 60px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 10;
+}
+
+.back-button .text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.back-button img {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+}
+
+
+@supports (-webkit-touch-callout: none) {
+    /* Disable callouts */
+    * {
+        -webkit-touch-callout: none;
+    }
+    
+    /* Smoother transitions */
+    a, button {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Elastic scroll fix */
+    body {
+        overscroll-behavior-y: contain;
+    }
+}
