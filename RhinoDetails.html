@@ -28,11 +28,36 @@
             <p><b>Masse:</b> 16cm x 22cm x 20cm</p>
             <p><b>Material:</b> 25% Baumwolle + 30% Polyester + 45% Nylon</p>
         </div>
-        <a href="#" class="add-to-cart">
+        <a href="#" class="add-to-cart" onclick="addToCart()">
             In den Warenkorb
             <img src="orangeCart.png" alt="Warenkorb Icon">
         </a>
     </div>
+    
+    <script>
+        function addToCart() {
+            const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+    
+            const product = {
+                id: 'rhino',
+                name: 'Rhino',
+                brand: 'Souvenir',
+                price: 12.95,
+                quantity: 1,
+                image: 'rhino.png'
+            };
+    
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+    
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            alert('Rhino wurde zum Warenkorb hinzugefügt!');
+        }
+    </script>
 
     <div class="bottom-nav">
         <img src="home.png" alt="Home" onclick="window.location.href='index.html'">

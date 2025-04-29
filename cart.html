@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warenkorb</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+            padding-bottom: 100px;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .info-section {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .info-section strong {
+            display: block;
+            font-size: 14px;
+            color: #555;
+        }
+        .info-section span {
+            font-weight: bold;
+            color: #000;
+        }
+        .cart-item {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .cart-item img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        .cart-item-details h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+        .cart-item-details small {
+            display: block;
+            color: #999;
+        }
+        .cart-summary {
+            padding: 15px 0;
+        }
+        .cart-summary div {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+        .checkout-btn {
+            background: #9cff9c;
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 2px solid #000;
+        }
+        .bottom-nav img {
+            width: 30px;
+        }
+        .cart-item-details button {
+            margin: 2px;
+            padding: 2px 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            margin: 15% auto;
+            text-align: center;
+        }
+
+        #closeModal {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #closeModal:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Warenkorb</h1>
+
+        <div class="info-section">
+            <strong>Adresse</strong>
+            <span>St.Gallen, Torstrasse 25</span>
+        </div>
+
+        <div class="info-section">
+            <strong>Versand</strong>
+            <span>5.95 CHF<br>Standard | 3–4 Tage</span>
+        </div>
+
+        <div id="cart-items"></div>
+
+        <div class="cart-summary">
+            <div><span>Subtotal (<span id="item-count">0</span>)</span><span id="subtotal">0.00 CHF</span></div>
+            <div><span>Versandkosten</span><span>5.95 CHF</span></div>
+            <div><strong>Total</strong><strong id="total">0.00 CHF</strong></div>
+        </div>
+
+        <div class="checkout-btn">Jetzt bestellen</div>
+    </div>
+
+    <div class="bottom-nav">
+        <img src="home.png" alt="Home" onclick="window.location.href='index.html'">
+        <img src="bunny.png" alt="Shop" onclick="window.location.href='shop.html'">
+        <img src="einkaufswagen.png" alt="Cart">
+    </div>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <h2>Bestellung erfolgreich!</h2>
+            <p>Vielen Dank für deinen Einkauf. Deine Bestellung wird bearbeitet.</p>
+            <button id="closeModal">Schließen</button>
+        </div>
+    </div>
+
+    <script>
+        const cartItemsEl = document.getElementById('cart-items');
+        const subtotalEl = document.getElementById('subtotal');
+        const totalEl = document.getElementById('total');
+        const itemCountEl = document.getElementById('item-count');
+        const orderModal = document.getElementById('orderModal');
+        const closeModalButton = document.getElementById('closeModal');
+
+        const SHIPPING_COST = 5.95;
+        let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+
+        let subtotal = 0;
+        let totalItems = 0;
+
+        function renderCart() {
+            cartItemsEl.innerHTML = '';
+            subtotal = 0;
+            totalItems = 0;
+
+            if (cart.length === 0) {
+                cartItemsEl.innerHTML = '<p>Dein Warenkorb ist leer.</p>';
+                subtotalEl.textContent = '0.00 CHF';
+                totalEl.textContent = '0.00 CHF';
+                itemCountEl.textContent = '0';
+                return;
+            }
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                totalItems += item.quantity;
+
+                const itemEl = document.createElement('div');
+                itemEl.className = 'cart-item';
+                itemEl.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-details">
+                        <small>${item.brand || ''}</small>
+                        <h3>${item.name}</h3>
+                        <p>
+                            Menge: ${item.quantity}
+                            <button onclick="changeQuantity('${item.id}', -1)">−</button>
+                            <button onclick="changeQuantity('${item.id}', 1)">+</button>
+                        </p>
+                        <button onclick="removeItem('${item.id}')">Entfernen</button>
+                    </div>
+                    <div style="margin-left:auto;">${item.quantity} × ${item.price.toFixed(2)} CHF</div>
+                `;
+                cartItemsEl.appendChild(itemEl);
+            });
+
+            subtotalEl.textContent = `${subtotal.toFixed(2)} CHF`;
+            totalEl.textContent = `${(subtotal + SHIPPING_COST).toFixed(2)} CHF`;
+            itemCountEl.textContent = totalItems;
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(item => item.id !== id);
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function changeQuantity(id, delta) {
+            const item = cart.find(p => p.id === id);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                removeItem(id);
+                return;
+            }
+
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        document.querySelector('.checkout-btn').addEventListener('click', function() {
+            orderModal.style.display = 'block';
+            sessionStorage.removeItem('cart');
+            cart = [];
+            renderCart();
+        });
+
+        closeModalButton.addEventListener('click', function() {
+            orderModal.style.display = 'none';
+            window.location.href = 'index.html';
+        });
+
+        renderCart();
+    </script>
+</body>
+</html>

@@ -28,11 +28,37 @@
             <p><b>Masse:</b> 20cm x 25cm x 35cm</p>
             <p><b>Material:</b> 56% Baumwolle + 44% Nylon</p>
         </div>
-        <a href="#" class="add-to-cart">
+        <a href="#" class="add-to-cart" onclick="addToCart()">
             In den Warenkorb
             <img src="orangeCart.png" alt="Warenkorb Icon">
         </a>
     </div>
+    
+    <script>
+        function addToCart() {
+            const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+    
+            const product = {
+                id: 'tiger',
+                name: 'Tiger',
+                brand: 'Galaxus',
+                price: 22.95,
+                quantity: 1,
+                image: 'tiger.png'
+            };
+    
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+    
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            alert('Tiger wurde zum Warenkorb hinzugefügt!');
+        }
+    </script>
+
 
     <div class="bottom-nav">
         <img src="home.png" alt="Home" onclick="window.location.href='index.html'">
