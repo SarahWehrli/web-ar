@@ -18,6 +18,9 @@
     </a>
     
     <div class="product-card">
+         <div class="input-wrapper" id="nameContainer">
+            <input type="text" id="nickname" name="nickname" placeholder="Nickname eingeben" class="styled-input">
+        </div>
         <img src="tiger.png" alt="Tiger" class="product-image">
         <div class="camera-icon">
             <a rel="ar" href="tiger.usdz">
@@ -60,6 +63,17 @@
             sessionStorage.setItem('cart', JSON.stringify(cart));
             alert('Tiger wurde zum Warenkorb hinzugefügt!');
         }
+        document.getElementById('nickname').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const name = e.target.value.trim();
+                if (name !== '') {
+                    const container = document.getElementById('nameContainer');
+                    container.innerHTML = `
+                        <div class="name-display">${name}</div>
+                    `;
+                }
+            }
+        });
     </script>
 
 
